@@ -4,4 +4,5 @@
 
 ```bash
 nix run .
+nix run . -- --cpu
 ```
