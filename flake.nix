@@ -16,10 +16,10 @@
         python = (
           pkgs.python3.withPackages (
             ps: with ps; [
-              torch
+              # torch
               torchsde
-              torchvision
-              torchaudio
+              # torchvision
+              # torchaudio
               numpy
               einops
               transformers
@@ -91,11 +91,14 @@
             cp -r --no-preserve=mode,ownership $src/* $out
             chmod -R u+w $out
 
+            python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117 --prefix=$out
+
             ln -s ${checkpoint}/v1-5-pruned-emaonly.ckpt \
               $out/models/checkpoints/v1-5-pruned-emaonly.safetensors
 
             echo '#!/bin/sh' > $out/bin/ComfyUI
             echo "export MALLOC=system" >> $out/bin/ComfyUI
+            echo "export PYTHONPATH=\"$out/lib/python3.12/site-packages:$PYTHONPATH\"" >> $out/bin/ComfyUI
             echo "mkdir -p \$HOME/comfyui/user" >> $out/bin/ComfyUI
             echo "mkdir -p \$HOME/comfyui/temp" >> $out/bin/ComfyUI
             echo "mkdir -p \$HOME/comfyui/input" >> $out/bin/ComfyUI
