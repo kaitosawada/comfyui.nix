@@ -19,7 +19,7 @@
               # torch
               torchsde
               # torchvision
-              # torchaudio
+              torchaudio
               numpy
               einops
               transformers
@@ -91,7 +91,7 @@
             cp -r --no-preserve=mode,ownership $src/* $out
             chmod -R u+w $out
 
-            python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117 --prefix=$out
+            python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu117 --prefix=$out
 
             ln -s ${checkpoint}/v1-5-pruned-emaonly.ckpt \
               $out/models/checkpoints/v1-5-pruned-emaonly.safetensors
